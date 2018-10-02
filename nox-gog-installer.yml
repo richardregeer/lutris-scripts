@@ -1,0 +1,30 @@
+name: Nox
+game_slug: nox
+version: GOG
+slug: nox-gog-installer
+runner: wine
+
+script:
+  files:
+    - installer: "N/A:Select the game's setup file. Download it here: \nhttps://www.gog.com/downloads/nox/en1installer0"
+  installer:
+    - task:
+        name: winekill
+        prefix: $GAMEDIR
+        arch: win32
+    - task:
+        args: /SILENT /LANG=en /NOGUI
+        executable: installer
+        name: wineexec
+        prefix: $GAMEDIR
+        arch: win32
+  game:
+    exe: drive_c/GOG Games/Nox/NOX.EXE
+    prefix: $GAMEDIR
+    arch: win32
+    working_dir: $GAMEDIR
+  wine:
+    Desktop: false
+    version: 3.16-i386
+  system:
+    reset_desktop: true
