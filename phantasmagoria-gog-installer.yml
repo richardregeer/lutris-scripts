@@ -1,0 +1,21 @@
+name: Phantasmagoria
+game_slug: phantasmagoria
+version: GOG
+slug: phantasmagoria-gog-installer
+runner: scummvm
+
+script:
+  files:
+    - installer: "N/A:Select the game's setup file. Download it here: \nhttps://www.gog.com/downloads/phantasmagoria/en1installer0\nhttps://www.gog.com/downloads/phantasmagoria/en1installer1"
+  installer:
+    - execute:
+        args: --gog -d "$GAMEDIR" "$installer"
+        description: Extracting game data
+        file: innoextract
+  game:
+     game_id: phantasmagoria
+     path: $GAMEDIR
+  scummvm:
+    aspect: true
+    gfx-mode: 3x
+    windowed: true
