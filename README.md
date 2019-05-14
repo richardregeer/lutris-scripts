@@ -5,6 +5,7 @@ For more info on how to create installation scripts see the [documentation](http
 
 ## Scripts
  - [Nox](https://lutris.net/games/nox/)
+ - [Phantasmagoria](https://lutris.net/games/phantasmagoria/)
 
 To run a script locally use:
 ```

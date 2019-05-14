@@ -1,0 +1,20 @@
+name: Broken sword 1- Shadow of the templars directors cut
+game_slug: broken-sword-1-shadow-of-the-templars-directors-cut
+version: Linux GOG version
+description: Use the Linux version of GOG.com
+slug: broken-sword-1-shadow-of-the-templars-directors-cut-installer
+runner: linux
+
+script:
+  files:
+    - installer: "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/broken_sword_directors_cut/en3installer1"
+  gogid: broken_sword_directors_cut
+  installer:
+    - chmodx: $installer
+    - execute:
+        description: Installing the game
+        file: installer
+  game:
+    game_id: broken-sword-1-shadow-of-the-templars-directors-cu
+    path: $GAMEDIR
+    exe: start.sh
