@@ -1,0 +1,51 @@
+name: Realms of the haunting
+game_slug: realms-of-the-haunting
+version: Linux GOG version
+description: Use the Linux version of GOG.com
+slug: realms-of-the-haunting-installer
+runner: dosbox
+
+script:
+  files:
+    - installer: "N/A:Select the GOG.com game setup file. Download it here: \n https://www.gog.com/downloads/realms_of_the_haunting/en3installer3"
+    - unzip: "http://lutris.net/files/tools/unzip.tar.gz"
+  installer:
+    - extract:
+        dst: $CACHE/unzip-file
+        file: $unzip
+    - execute:
+        args: $installer -d "$GAMEDIR" "data/noarch/*"
+        description: Extracting game data, it will take a while...
+        file: $CACHE/unzip-file/unzip
+    - merge:
+        dst: $GAMEDIR
+        src: $GAMEDIR/data/noarch
+    - write_config:
+        file: $GAMEDIR/dosbox_roth.conf
+        key: output
+        section: sdl
+        value: opengl
+    - write_config:
+        file: $GAMEDIR/dosbox_roth.conf
+        key: fulldouble
+        section: sdl
+        value: true
+    - write_config:
+        file: $GAMEDIR/dosbox_roth.conf
+        key: fullresolution
+        section: sdl
+        value: 1366x768
+    - write_config:
+        file: $GAMEDIR/dosbox_roth.conf
+        key: aspect
+        section: render
+        value: true
+    - write_config:
+        file: $GAMEDIR/dosbox_roth.conf
+        key: scaler
+        section: render
+        value: normal3x                
+  game:
+    config_file: $GAMEDIR/dosbox_roth.conf
+    main_file: $GAMEDIR/dosbox_roth_single.conf
+  

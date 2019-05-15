@@ -1,5 +1,5 @@
 name: Broken sword 1- Shadow of the templars directors cut
-game_slug: broken-sword-1-shadow-of-the-templars-directors-cut
+game_slug: broken-sword-1-shadow-of-the-templars-directors-cu
 version: Linux GOG version
 description: Use the Linux version of GOG.com
 slug: broken-sword-1-shadow-of-the-templars-directors-cut-installer
@@ -8,13 +8,16 @@ runner: linux
 script:
   files:
     - installer: "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/broken_sword_directors_cut/en3installer1"
-  gogid: broken_sword_directors_cut
+    - unzip: "http://lutris.net/files/tools/unzip.tar.gz"
   installer:
-    - chmodx: $installer
+    - extract:
+        dst: $CACHE/unzip-file
+        file: $unzip
     - execute:
-        description: Installing the game
-        file: installer
-  game:
-    game_id: broken-sword-1-shadow-of-the-templars-directors-cu
-    path: $GAMEDIR
-    exe: start.sh
+        args: $installer -d "$GAMEDIR" "data/noarch/*"
+        description: Extracting game data, it will take a while...
+        file: $CACHE/unzip-file/unzip
+    - merge:
+        dst: $GAMEDIR
+        src: $GAMEDIR/data/noarch
+  exe: start.sh
