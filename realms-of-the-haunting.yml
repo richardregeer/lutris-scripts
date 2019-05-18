@@ -34,7 +34,7 @@ script:
         file: $GAMEDIR/dosbox_roth.conf
         key: fullresolution
         section: sdl
-        value: 1366x768
+        value: desktop
     - write_config:
         file: $GAMEDIR/dosbox_roth.conf
         key: aspect

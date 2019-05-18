@@ -1,0 +1,57 @@
+name: Lands of lore 2
+game_slug: lands-of-lore-ii
+version: DosBox GOG version
+description: Use the windows installation to extract the game data
+slug: lands-of-lore-ii-gog-installer
+runner: dosbox
+
+script:
+  files:
+    - installer: "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/lands_of_lore_guardians_of_destiny/en1installer1\n"
+    - fileextract: https://lutris.net/files/tools/innoextract.tar.gz
+  installer:
+    - extract:
+        dst: $CACHE
+        file: $fileextract
+    - execute:
+        args: -d "$CACHE" "$installer"
+        file: $CACHE/innoextract
+    - merge:
+        dst: $GAMEDIR
+        src: $CACHE/app
+    - merge:
+        dst: $GAMEDIR/DOSBOX
+        src: $GAMEDIR/dosboxLOL2_single.conf
+    - write_config:
+        file: $GAMEDIR/dosboxLOL2.conf
+        key: output
+        section: sdl
+        value: opengl
+    - write_config:
+        file: $GAMEDIR/dosboxLOL2.conf
+        key: fulldouble
+        section: sdl
+        value: true
+    - write_config:
+        file: $GAMEDIR/dosboxLOL2.conf
+        key: fullresolution
+        section: sdl
+        value: desktop
+    - write_config:
+        file: $GAMEDIR/dosboxLOL2.conf
+        key: aspect
+        section: render
+        value: true
+    - write_config:
+        file: $GAMEDIR/dosboxLOL2.conf
+        key: scaler
+        section: render
+        value: normal2x  
+    - write_config:
+        file: $GAMEDIR/dosboxLOL2.conf
+        key: cputype
+        section: cpu
+        value: auto
+  game:
+    config_file: $GAMEDIR/dosboxLOL2.conf    
+    main_file: DOSBOX/dosboxLOL2_single.conf 

@@ -1,0 +1,65 @@
+name: Crusader no regret
+game_slug: crusader-no-regret
+version: DosBox GOG version
+description: Use the windows installation to extract the game data
+slug: crusader-no-regret-gog-installer
+runner: dosbox
+
+script:
+  files:
+    - installer: "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/crusader_no_regret/en1installer0\n"
+    - fileextract: "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+  installer:
+    - extract:
+        dst: $CACHE
+        description: Extracting innoextract application
+        file: $fileextract
+    - execute:
+        args: -d "$CACHE/game" "$installer"
+        description: Extracting game data
+        file: $CACHE/innoextract
+    - merge:
+        dst: $GAMEDIR
+        src: $CACHE/game
+    - move:
+        dst: $GAMEDIR 
+        src: $GAMEDIR/__support/app/dosboxREGRET.conf          
+    - write_config:
+        file: $GAMEDIR/dosboxREGRET.conf
+        key: output
+        section: sdl
+        value: opengl
+    - write_config:
+        file: $GAMEDIR/dosboxREGRET.conf
+        key: fulldouble
+        section: sdl
+        value: true
+    - write_config:
+        file: $GAMEDIR/dosboxREGRET.conf
+        key: fullresolution
+        section: sdl
+        value: desktop
+    - write_config:
+        file: $GAMEDIR/dosboxREGRET.conf
+        key: aspect
+        section: render
+        value: true
+    - write_config:
+        file: $GAMEDIR/dosboxREGRET.conf
+        key: scaler
+        section: render
+        value: normal2x
+    - write_file:
+        content: |
+          [ipx] ipx=false
+          [autoexec]
+          mount c .
+          c:
+          imgmount d game.gog -t iso -fs iso
+          regret.exe
+          exit
+        file: $GAMEDIR/dosboxREGRET_single.conf
+  game:
+    game_id: crusader-no-regret
+    config_file: $GAMEDIR/dosboxREGRET.conf
+    main_file: $GAMEDIR/dosboxREGRET_single.conf 
